@@ -77,6 +77,7 @@ interface MultipleSelectorProps {
   >;
   /** hide the clear all button. */
   hideClearAllButton?: boolean;
+  amount?: number;
 }
 
 export interface MultipleSelectorRef {
@@ -190,6 +191,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
       commandProps,
       inputProps,
       hideClearAllButton = false,
+      amount,
     }: MultipleSelectorProps,
     ref: React.Ref<MultipleSelectorRef>,
   ) => {
@@ -436,7 +438,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
       >
         <div
           className={cn(
-            'min-h-10 rounded-md border border-input text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+            ' relative min-h-10 rounded-md border border-input text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
             {
               'px-3 py-2': selected.length !== 0,
               'cursor-text': !disabled && selected.length !== 0,
@@ -448,6 +450,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
             inputRef.current?.focus();
           }}
         >
+          <div className='absolute bottom-0 right-0 text-muted-foreground  pr-1'>{amount}/{maxSelected}</div>
           <div className="relative flex flex-wrap gap-1">
             {selected.map((option) => {
               return (

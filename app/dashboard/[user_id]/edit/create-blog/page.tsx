@@ -10,7 +10,7 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 import MultipleSelector, { Option } from '@/components/ui/multi-selector';
-import { z } from "zod";
+import { set, z } from "zod";
 
 let Editor = dynamic(() => import("../../../../../components/editor/editor"), {
   ssr: false,
@@ -22,7 +22,7 @@ const descriptionSchema = z.string().min(50, "Description must be at least 50 ch
 const contentSchema = z.object({
   blocks: z.array(z.any()).min(1, "Content cannot be empty"),  // Customize based on your Editor's content structure
 });
-const categorySchema = z.array(z.string()).min(1, "Categories cannot be empty");
+const categorySchema = z.array(z.string()).min(1, "Categories cannot be empty").max(5, "Categories cannot exceed 5");
 const OPTIONS: Option[] = [
   { label: 'Technology', value: 'technology' },
   { label: 'Programming', value: 'programming' },
@@ -81,6 +81,9 @@ export default function CreateBlog({ params }: { params: { user_id: string } }) 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
+  const [maxAmount, setOnMaxAmount] = useState("");
+  const [amount, setAmount ] = useState(0);
+  const max_options = 5;
   
   const [errors, setErrors] = useState({
     title: "",
@@ -184,8 +187,18 @@ export default function CreateBlog({ params }: { params: { user_id: string } }) 
             no results found.
           </p>
         }
-        onChange={(selectedOptions) => setCategories(selectedOptions.map((option) => option.value))}
-         className=" w-full ml-auto mr-auto md:w-5/12"
+        onChange={(selectedOptions) => {
+            setCategories(selectedOptions.map((option) => option.value));
+            setAmount(amount + 1);
+         
+        }}
+      
+        maxSelected={max_options}
+        onMaxSelected={(maxLimit) => {
+          setOnMaxAmount("border-red-500 focus:border-red-500");
+        }} 
+         className={` w-full ml-auto mr-auto md:w-5/12  ${maxAmount}`}
+         amount={amount}
          
       />
        {errors.categories && <p className="text-red-500 text-sm font-semibold">{errors.categories}</p>}
