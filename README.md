@@ -1,1 +1,1 @@
-# Blog Project Using Supabase, EditoJs, Nextjs and Better-Auth
+# Blog Project Using Supabase, EditorJs, Nextjs and Better-Auth
