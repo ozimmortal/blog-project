@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -91,6 +91,9 @@ export default function CreateBlog({ params }: { params: { user_id: string } }) 
     content: "",
     categories: ""
   });
+  useEffect(() => {
+    console.log("Updated categories:", categories);
+  }, [categories]);
 
   const validateInputs = () => {
     let valid = true;
@@ -188,10 +191,11 @@ export default function CreateBlog({ params }: { params: { user_id: string } }) 
           </p>
         }
         onChange={(selectedOptions) => {
-            setCategories(selectedOptions.map((option) => option.value));
-            setAmount(amount + 1);
-         
+          const l = selectedOptions.map((option) => option.value);
+          setCategories(l); 
+          setAmount(l.length); 
         }}
+        
       
         maxSelected={max_options}
         onMaxSelected={(maxLimit) => {
