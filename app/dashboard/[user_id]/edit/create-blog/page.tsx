@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/avatar"
 import MultipleSelector, { Option } from '@/components/ui/multi-selector';
 import { set, z } from "zod";
+import { ModeToggle } from "@/components/ui/theme-toggle";
 
 let Editor = dynamic(() => import("../../../../../components/editor/editor"), {
   ssr: false,
@@ -150,6 +151,7 @@ export default function CreateBlog({ params }: { params: { user_id: string } }) 
                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
+              <ModeToggle/>
               <div></div>
           </div>
       </div>
